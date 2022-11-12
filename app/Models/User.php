@@ -16,5 +16,5 @@ class User extends Model
         'password',
         'created_at',
         'updated_at',
-    ]
+    ];
 }
