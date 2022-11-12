@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use PHPUnit\TextUI\CliArguments\Exception;
+use Throwable;
 
 class UserController extends Controller
 {
@@ -36,21 +40,19 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        $user_name = $request['name'];
-        $user_email = $request['email'];
-        $user_password = $request['password'];
-
-        User::create([
-            'name' => $user_name,
-            'email' => $user_email,
-            'password' => $user_password,
-        ]);
-
-        return [
-            $user_name,
-            $user_email,
-            $user_password,
-        ];
+        try {
+            DB::beginTransaction();
+            User::create([
+                'name' => $request['name'],
+                'email' => $request['email'],
+                'password' => Hash::make($request['password']),
+            ]);
+            DB::commit();
+        } catch (Throwable $e) {
+            DB::rollBack();
+            throw new Exception($e);
+        }
+        return response('SUCCESS', 200)->header('Content-Type', 'text/plain');
     }
 
     /**
