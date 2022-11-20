@@ -2,26 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreThreadRequest;
+use App\Http\Requests\UpdateThreadRequest;
+use App\Models\Thread;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use PHPUnit\TextUI\CliArguments\Exception;
+use Psy\Readline\Hoa\Exception;
 use Throwable;
 
-class UserController extends Controller
+class ThreadController extends Controller
 {
     public function index()
     {
-        $auth_user = Auth::user();
-        return [
-            'id' => $auth_user->id,
-            'name' => $auth_user->name,
-            'email' => $auth_user->email,
-            'password' => $auth_user->password,
-        ];
+        return Thread::all();
     }
 
     /**
@@ -37,17 +29,17 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreUserRequest  $request
+     * @param  \App\Http\Requests\StoreThreadRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUserRequest $request)
+    public function store(StoreThreadRequest $request)
     {
         try {
             DB::beginTransaction();
-            User::create([
-                'name' => $request['name'],
-                'email' => $request['email'],
-                'password' => Hash::make($request['password']),
+            Thread::factory()->create([
+                'user_id' => $request['user_id'],
+                'title' => $request['title'],
+                'content' =>$request['content'],
             ]);
             DB::commit();
         } catch (Throwable $e) {
@@ -60,10 +52,10 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Thread $thread)
     {
         //
     }
@@ -71,10 +63,10 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(Thread $thread)
     {
         //
     }
@@ -82,11 +74,11 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateUserRequest  $request
-     * @param  \App\Models\User  $user
+     * @param  \App\Http\Requests\UpdateThreadRequest  $request
+     * @param  \App\Models\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateThreadRequest $request, Thread $thread)
     {
         //
     }
@@ -94,11 +86,15 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Thread $thread)
     {
         //
+    }
+
+    public function list() {
+        return Thread::all()->toArray();
     }
 }

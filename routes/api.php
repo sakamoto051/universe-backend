@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ThreadController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\dummyAPI;
@@ -11,8 +12,10 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
     Route::get('/logout', [LoginController::class, 'logout']);
+    Route::resource('thread', ThreadController::class);
+    Route::get('/thread_list', [ThreadController::class, 'list']);
 });
 
 Route::get('/data', [dummyAPI::class, 'getData']);
 
-// Route::resource('user', UserController::class);
+Route::resource('user', UserController::class);
