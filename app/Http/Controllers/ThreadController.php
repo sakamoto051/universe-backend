@@ -5,15 +5,28 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreThreadRequest;
 use App\Http\Requests\UpdateThreadRequest;
 use App\Models\Thread;
+use App\UseCases\Thread\ThreadInteracter;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Psy\Readline\Hoa\Exception;
 use Throwable;
 
 class ThreadController extends Controller
 {
+    private $thread_interacter;
+
+    public function __construct(ThreadInteracter $thread_interacter)
+    {
+        $this->thread_interacter = $thread_interacter;
+    }
+
     public function index()
     {
-        return Thread::orderBy('created_at', 'desc')->get();
+        try {
+            return Thread::orderBy('created_at', 'desc')->get();
+        } catch (Throwable $e) {
+            throw new Exception($e);
+        }
     }
 
     /**
@@ -92,5 +105,15 @@ class ThreadController extends Controller
     public function destroy(Thread $thread)
     {
         //
+    }
+
+    /**
+     * Get thread comments
+     * @param Request $request
+     * @return array
+     */
+    public function thread_comments(Request $request)
+    {
+        return Thread::find($request['thread_id'])->comments;
     }
 }

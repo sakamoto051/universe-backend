@@ -4,16 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Sanctum\HasApiTokens;
 
-class Thread extends Model
+class Comment extends Model
 {
-    use HasFactory, HasApiTokens;
+    use HasFactory;
 
     protected $fillable = [
         'user_id',
-        'title',
-        'content',
+        'thread_id',
+        'content'
     ];
 
     public function user()
@@ -21,9 +20,8 @@ class Thread extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function comments()
+    public function thread()
     {
-        return $this->hasMany(Comment::class);
+        return $this->belongsTo(Thread::class);
     }
-
 }

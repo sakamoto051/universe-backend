@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Thread;
+use App\Models\Comment;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class ThreadSeeder extends Seeder
+class CommentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,14 +15,16 @@ class ThreadSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i < 3; $i++) {
-            Thread::factory()->create([
+        for ($i = 0; $i < 4; $i++) {
+            Comment::factory()->create([
                 'user_id' => 1,
+                'thread_id' => 1,
             ]);
         }
-        for ($i = 1; $i < 3; $i++) {
-            Thread::factory()->create([
+        for ($i = 0; $i < 4; $i++) {
+            Comment::factory()->create([
                 'user_id' => 2,
+                'thread_id' => 2,
             ]);
         }
     }
