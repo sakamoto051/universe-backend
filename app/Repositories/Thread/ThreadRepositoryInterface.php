@@ -9,7 +9,7 @@ interface ThreadRepositoryInterface
      * @param int $thread_id
      * @return array
      */
-    public function thread_detail(int $thread_id): array;
+    public function thread_detail(int $thread_id);
 
 }
 
