@@ -15,7 +15,7 @@ use App\Http\Controllers\UserController;
     Route::resource('thread', ThreadController::class);
     Route::get('/thread_list', [ThreadController::class, 'list']);
     Route::get('/thread_ids', [ThreadController::class, 'ids']);
-    Route::post('/thread_comments', [ThreadController::class, 'thread_comments']);
+    Route::post('/thread_detail', [ThreadController::class, 'thread_detail']);
 // });
 
 Route::get('/data', [dummyAPI::class, 'getData']);

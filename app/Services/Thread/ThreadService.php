@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Services\Thread;
+
 use App\Repositories\Thread\ThreadRepositoryInterface;
+use App\Values\Thread\ThreadDetailOutput;
 
 class ThreadService
 {
@@ -12,10 +14,25 @@ class ThreadService
         $this->thread_repository = $thread_repository;
     }
 
-    public function thread_detail(int $thread_id): array
+    public function index()
     {
-        $thread = $this->thread_repository->thread_detail($thread_id);
+        $res = $this->thread_repository->index();
+        return $res;
+    }
 
+    public function store($request)
+    {
+        $this->thread_repository->store($request);
+    }
+
+    public function fetch($id)
+    {
+        $thread = $this->thread_repository->findById($id);
         return $thread;
+    }
+
+    public function thread_detail($thread_id)
+    {
+        return $this->thread_repository->thread_detail($thread_id));
     }
 }

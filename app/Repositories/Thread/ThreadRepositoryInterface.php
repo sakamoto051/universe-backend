@@ -2,14 +2,19 @@
 
 namespace App\Repositories\Thread;
 
+use App\Entities\ThreadEntity;
+use ThreadDetailOutput;
+
 interface ThreadRepositoryInterface
 {
-    /**
-     * Summary of thread_detail
-     * @param int $thread_id
-     * @return array
-     */
-    public function thread_detail(int $thread_id);
+
+    public function index();
+
+    public function store($request);
+
+    public function findById($id);
+
+    public function thread_detail($thread_id);
 
 }
 
