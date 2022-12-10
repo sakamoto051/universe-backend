@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreThreadRequest extends FormRequest
+class FetchIdRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,7 @@ class StoreThreadRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'required|integer',
-            'title' => 'required|string|max:128',
-            'content' => 'required|string|max:2048'
+            'id' => 'required|integer',
         ];
     }
 }

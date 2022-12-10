@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\ThreadEntity;
+use App\Http\Requests\FetchIdRequest;
 use App\Http\Requests\StoreThreadRequest;
 use App\Http\Requests\UpdateThreadRequest;
 use App\Models\Thread;
 use App\UseCases\Thread\ThreadInteracter;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Psy\Readline\Hoa\Exception;
-use Throwable;
 
 class ThreadController extends Controller
 {
@@ -20,19 +19,21 @@ class ThreadController extends Controller
         $this->thread_interacter = $thread_interacter;
     }
 
+    /**
+     * Index of Thread list.
+     *
+     * @return Thread[] $theads
+     */
     public function index()
     {
-        try {
-            return Thread::orderBy('created_at', 'desc')->get();
-        } catch (Throwable $e) {
-            throw new Exception($e);
-        }
+        $threads = $this->thread_interacter->index();
+        return $threads;
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return
      */
     public function create()
     {
@@ -47,29 +48,20 @@ class ThreadController extends Controller
      */
     public function store(StoreThreadRequest $request)
     {
-        try {
-            DB::beginTransaction();
-            Thread::factory()->create([
-                'user_id' => $request['user_id'],
-                'title' => $request['title'],
-                'content' =>$request['content'],
-            ]);
-            DB::commit();
-        } catch (Throwable $e) {
-            DB::rollBack();
-            throw new Exception($e);
-        }
-        return response('SUCCESS', 200)->header('Content-Type', 'text/plain');
+        $this->thread_interacter->store($request);
+        return response('Success to store thread.', 200)->header('Content-Type', 'text/plain');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Thread  $thread
+     * @param FetchIdRequest $id
      * @return Thread $thread
      */
+    // public function show(FetchIdRequest $id)
     public function show(Thread $thread)
     {
+        // $thread = $this->thread_interacter->fetch($id);
         return $thread;
     }
 
@@ -77,7 +69,7 @@ class ThreadController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Thread  $thread
-     * @return \Illuminate\Http\Response
+     * @return
      */
     public function edit(Thread $thread)
     {
@@ -89,7 +81,7 @@ class ThreadController extends Controller
      *
      * @param  \App\Http\Requests\UpdateThreadRequest  $request
      * @param  \App\Models\Thread  $thread
-     * @return \Illuminate\Http\Response
+     * @return
      */
     public function update(UpdateThreadRequest $request, Thread $thread)
     {
@@ -100,20 +92,21 @@ class ThreadController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Thread  $thread
-     * @return \Illuminate\Http\Response
+     * @return
      */
     public function destroy(Thread $thread)
     {
         //
     }
 
-    /**
-     * Get thread comments
-     * @param Request $request
-     * @return array
-     */
-    public function thread_comments(Request $request)
+    public function thread_detail(FetchIdRequest $request)
     {
-        return Thread::find($request['thread_id'])->comments;
+        $thread_id = $request->id;
+        $res = $this->thread_interacter->thread_detail($thread_id);
+        // return $res->toArray();
+        return $res;
+        // return [
+        //     'test' => 'test',
+        // ];
     }
 }
