@@ -3,7 +3,6 @@
 namespace App\Services\Thread;
 
 use App\Repositories\Thread\ThreadRepositoryInterface;
-use App\Values\Thread\ThreadDetailOutput;
 
 class ThreadService
 {
@@ -25,14 +24,9 @@ class ThreadService
         $this->thread_repository->store($request);
     }
 
-    public function fetch($id)
+    public function findById($thread_id)
     {
-        $thread = $this->thread_repository->findById($id);
+        $thread = $this->thread_repository->findById($thread_id);
         return $thread;
-    }
-
-    public function thread_detail($thread_id)
-    {
-        return $this->thread_repository->thread_detail($thread_id));
     }
 }

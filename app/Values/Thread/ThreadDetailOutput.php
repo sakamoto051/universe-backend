@@ -4,34 +4,22 @@ namespace App\Values\Thread;
 
 class ThreadDetailOutput
 {
-    private int $thread_id;
-    private int $user_id;
-    private string $title;
-    private string $content;
+    private array $thread;
     private array $comments;
 
     public function __construct(
-        int $thread_id,
-        int $user_id,
-        string $title,
-        string $content,
+        array $thread,
         array $comments,
     )
     {
-        $this->thread_id = $thread_id;
-        $this->user_id = $user_id;
-        $this->title = $title;
-        $this->content = $content;
+        $this->thread = $thread;
         $this->comments = $comments;
     }
 
     public function toArray()
     {
         return [
-            'thread_id' => $this->thread_id,
-            'user_id' => $this->user_id,
-            'title' => $this->title,
-            'content' => $this->content,
+            'thread' => $this->thread,
             'comments' => $this->comments,
         ];
     }

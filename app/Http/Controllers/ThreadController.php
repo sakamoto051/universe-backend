@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Entities\ThreadEntity;
 use App\Http\Requests\FetchIdRequest;
 use App\Http\Requests\StoreThreadRequest;
 use App\Http\Requests\UpdateThreadRequest;
 use App\Models\Thread;
 use App\UseCases\Thread\ThreadInteracter;
-use Illuminate\Http\Request;
 
 class ThreadController extends Controller
 {
@@ -101,12 +99,8 @@ class ThreadController extends Controller
 
     public function thread_detail(FetchIdRequest $request)
     {
-        $thread_id = $request->id;
+        $thread_id = $request->thread_id;
         $res = $this->thread_interacter->thread_detail($thread_id);
-        // return $res->toArray();
         return $res;
-        // return [
-        //     'test' => 'test',
-        // ];
     }
 }

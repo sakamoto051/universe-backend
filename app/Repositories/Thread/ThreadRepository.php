@@ -2,14 +2,10 @@
 
 namespace App\Repositories\Thread;
 
-use App\Entities\CommentEntity;
-use App\Entities\ThreadDetailEntity;
-use App\Models\Comment;
 use App\Models\Thread;
 use Illuminate\Support\Facades\DB;
 use Psy\Readline\Hoa\Exception;
 use App\Entities\ThreadEntity;
-use ThreadDetailOutput;
 use Throwable;
 
 class ThreadRepository implements ThreadRepositoryInterface
@@ -37,19 +33,19 @@ class ThreadRepository implements ThreadRepositoryInterface
         }
     }
 
-    public function findById($id)
+    public function findById($thread_id)
     {
         try {
-            $thread = Thread::find($id);
-            return $thread;
+            $thread = Thread::find($thread_id);
+            return new ThreadEntity(
+                $thread->id,
+                $thread->user_id,
+                $thread->title,
+                $thread->content,
+            );
         } catch (Throwable $e) {
             throw new Exception($e);
         }
-    }
-
-    public function thread_detail($thread_id)
-    {
-        return Thread::with('comments')->find($thread_id);
     }
 }
 
