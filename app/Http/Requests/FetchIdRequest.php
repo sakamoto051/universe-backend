@@ -24,7 +24,7 @@ class FetchIdRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|integer',
+            'thread_id' => 'required|integer',
         ];
     }
 }
