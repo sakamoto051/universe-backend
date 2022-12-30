@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('thread_id')->constrained('threads');
+            $table->bigInteger('comment_no')->unsigned();
             $table->text('content');
             $table->timestamps();
         });

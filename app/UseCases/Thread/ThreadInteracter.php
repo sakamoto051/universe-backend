@@ -42,7 +42,6 @@ class ThreadInteracter
             $thread->id,
             $thread->user_id,
             $thread->title,
-            $thread->content,
         );
         $threadOutput = $threadOutput->toArray();
 
@@ -52,6 +51,7 @@ class ThreadInteracter
                 $comment->id,
                 $comment->user_id,
                 $comment->thread_id,
+                $comment->comment_no,
                 $comment->content,
             );
             $commentsOutput[] = $commentOutput->toArray();

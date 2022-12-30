@@ -41,7 +41,6 @@ class ThreadRepository implements ThreadRepositoryInterface
                 $thread->id,
                 $thread->user_id,
                 $thread->title,
-                $thread->content,
             );
         } catch (Throwable $e) {
             throw new Exception($e);

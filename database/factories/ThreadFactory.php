@@ -18,7 +18,6 @@ class ThreadFactory extends Factory
     {
         return [
             'title' => $this->faker->name,
-            'content' => $this->faker->realText,
         ];
     }
 }

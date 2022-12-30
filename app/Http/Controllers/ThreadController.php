@@ -7,6 +7,7 @@ use App\Http\Requests\StoreThreadRequest;
 use App\Http\Requests\UpdateThreadRequest;
 use App\Models\Thread;
 use App\UseCases\Thread\ThreadInteracter;
+use App\Http\Controllers\Controller;
 
 class ThreadController extends Controller
 {

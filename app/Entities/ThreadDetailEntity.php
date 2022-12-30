@@ -4,7 +4,7 @@ namespace App\Entities;
 
 use App\Entities\Entity;
 
-class ThreadEntity extends Entity
+class ThreadDetailEntity extends Entity
 {
     /**
      * Undocumented variable

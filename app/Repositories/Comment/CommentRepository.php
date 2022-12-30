@@ -12,13 +12,14 @@ class CommentRepository implements CommentRepositoryInterface
     public function findByThreadId($thread_id)
     {
         try {
-            $comments = Comment::where('thread_id', $thread_id)->orderByDesc('created_at')->get();
+            $comments = Comment::where('thread_id', $thread_id)->orderBy('comment_no')->get();
             $comment_entities = [];
             foreach ($comments as $comment) {
                 $comment_entities[] = new CommentEntity(
                     $comment->id,
                     $comment->user_id,
                     $comment->thread_id,
+                    $comment->comment_no,
                     $comment->content,
                 );
             }
