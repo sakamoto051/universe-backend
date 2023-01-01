@@ -98,9 +98,8 @@ class ThreadController extends Controller
         //
     }
 
-    public function thread_detail(FetchIdRequest $request)
+    public function thread_detail(int $thread_id)
     {
-        $thread_id = $request->thread_id;
         $res = $this->thread_interacter->thread_detail($thread_id);
         return $res;
     }

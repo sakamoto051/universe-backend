@@ -24,7 +24,6 @@ class ThreadRepository implements ThreadRepositoryInterface
             Thread::factory()->create([
                 'user_id' => $request['user_id'],
                 'title' => $request['title'],
-                'content' =>$request['content'],
             ]);
             DB::commit();
         } catch (Throwable $e) {
