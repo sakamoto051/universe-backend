@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ThreadController;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     Route::get('/logout', [LoginController::class, 'logout']);
     Route::resource('thread', ThreadController::class);
+    Route::resource('comment', CommentController::class);
     Route::get('/thread_list', [ThreadController::class, 'list']);
     Route::get('/thread_ids', [ThreadController::class, 'ids']);
     Route::get('/thread_detail/{thread_id}', [ThreadController::class, 'thread_detail']);
