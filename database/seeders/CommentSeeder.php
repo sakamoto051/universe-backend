@@ -15,14 +15,14 @@ class CommentSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 0; $i < 4; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             Comment::factory()->create([
                 'user_id' => 1,
                 'thread_id' => 1,
                 'comment_no' => $i + 1,
             ]);
         }
-        for ($i = 0; $i < 4; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             Comment::factory()->create([
                 'user_id' => 2,
                 'thread_id' => 2,

@@ -21,6 +21,7 @@ class CommentRepository implements CommentRepositoryInterface
                     $comment->thread_id,
                     $comment->comment_no,
                     $comment->content,
+                    $comment->created_at,
                 );
             }
             return $comment_entities;

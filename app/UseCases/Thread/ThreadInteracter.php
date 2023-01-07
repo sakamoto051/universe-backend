@@ -53,6 +53,7 @@ class ThreadInteracter
                 $comment->thread_id,
                 $comment->comment_no,
                 $comment->content,
+                $comment->created_at,
             );
             $commentsOutput[] = $commentOutput->toArray();
         }
