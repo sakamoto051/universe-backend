@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Thread;
 
+use App\Models\Comment;
 use App\Models\Thread;
 use Illuminate\Support\Facades\DB;
 use Psy\Readline\Hoa\Exception;
@@ -21,9 +22,22 @@ class ThreadRepository implements ThreadRepositoryInterface
     {
         try {
             DB::beginTransaction();
-            Thread::factory()->create([
-                'user_id' => $request['user_id'],
-                'title' => $request['title'],
+            $thread_id = Thread::factory()->create([
+                'user_id' => $request->user_id,
+                'title' => $request->title,
+            ])->id;
+
+            $last_comment_no = DB::table('comments')
+                ->select(DB::raw('COUNT(*) as comment_num'))
+                ->where('thread_id', $thread_id)
+                ->first();
+            $comment_no = $last_comment_no->comment_num + 1;
+
+            Comment::create([
+                'user_id' => $request->user_id,
+                'thread_id' => $thread_id,
+                'comment_no' => $comment_no,
+                'content' => $request->content,
             ]);
             DB::commit();
         } catch (Throwable $e) {

@@ -26,6 +26,7 @@ class StoreThreadRequest extends FormRequest
         return [
             'user_id' => 'required|integer',
             'title' => 'required|string|max:128',
+            'content' => 'required|string|max:2048',
         ];
     }
 }
