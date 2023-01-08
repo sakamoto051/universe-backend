@@ -10,5 +10,7 @@ interface ThreadRepositoryInterface
     public function store($request);
 
     public function findById($id);
+
+    public function myThread($user_id);
 }
 

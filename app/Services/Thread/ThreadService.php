@@ -29,4 +29,10 @@ class ThreadService
         $thread = $this->thread_repository->findById($thread_id);
         return $thread;
     }
+
+    public function myThread($user_id)
+    {
+        $threads = $this->thread_repository->myThread($user_id);
+        return $threads;
+    }
 }

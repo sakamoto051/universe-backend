@@ -103,4 +103,10 @@ class ThreadController extends Controller
         $res = $this->thread_interacter->thread_detail($thread_id);
         return $res;
     }
+
+    public function myThread(int $user_id)
+    {
+        $res = $this->thread_interacter->myThread($user_id);
+        return $res;
+    }
 }

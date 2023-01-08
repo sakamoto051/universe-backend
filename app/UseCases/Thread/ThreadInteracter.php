@@ -65,4 +65,19 @@ class ThreadInteracter
 
         return $thread_detail->toArray();
     }
+
+    public function myThread($user_id)
+    {
+        $threads = $this->thread_service->myThread($user_id);
+        $threads_output = [];
+        foreach ($threads as $thread) {
+            $output = new ThreadOutput(
+                $thread->id,
+                $thread->user_id,
+                $thread->title,
+            );
+            $threads_output[] = $output->toArray();
+        }
+        return $threads_output;
+    }
 }

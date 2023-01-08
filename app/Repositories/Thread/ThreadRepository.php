@@ -59,5 +59,24 @@ class ThreadRepository implements ThreadRepositoryInterface
             throw new Exception($e);
         }
     }
+
+    public function myThread($user_id)
+    {
+        try {
+            $threads = Thread::where('user_id', $user_id)->orderByDesc('created_at')->get();
+            $thread_entities = [];
+            foreach ($threads as $thread) {
+                $thread_entities[] = new ThreadEntity(
+                    $thread->id,
+                    $thread->user_id,
+                    $thread->title,
+                );
+            }
+        } catch (Throwable $e) {
+            throw new Exception($e);
+        }
+
+        return $thread_entities;
+    }
 }
 

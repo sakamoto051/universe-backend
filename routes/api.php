@@ -18,6 +18,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/thread_list', [ThreadController::class, 'list']);
     Route::get('/thread_ids', [ThreadController::class, 'ids']);
     Route::get('/thread_detail/{thread_id}', [ThreadController::class, 'thread_detail']);
+    Route::get('/my_thread/{user_id}', [ThreadController::class, 'myThread']);
 });
 
 Route::get('/data', [dummyAPI::class, 'getData']);
