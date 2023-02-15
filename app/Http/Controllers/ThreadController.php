@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\FetchIdRequest;
 use App\Http\Requests\StoreThreadRequest;
-use App\Http\Requests\UpdateThreadRequest;
 use App\Models\Thread;
 use App\UseCases\Thread\ThreadInteracter;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
+use Illuminate\Contracts\Routing\ResponseFactory;
 
 class ThreadController extends Controller
 {
@@ -21,31 +22,21 @@ class ThreadController extends Controller
     /**
      * Index of Thread list.
      *
-     * @return Thread[] $theads
+     * @return array $theads
      */
-    public function index()
+    public function index(): array
     {
         $threads = $this->thread_interacter->index();
         return $threads;
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreThreadRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param  StoreThreadRequest  $request
+     * @return ResponseFactory|Response
      */
-    public function store(StoreThreadRequest $request)
+    public function store(StoreThreadRequest $request): ResponseFactory|Response
     {
         $this->thread_interacter->store($request);
         return response('Success to store thread.', 200)->header('Content-Type', 'text/plain');
@@ -58,53 +49,29 @@ class ThreadController extends Controller
      * @return Thread $thread
      */
     // public function show(FetchIdRequest $id)
-    public function show(Thread $thread)
+    public function show(Thread $thread): Thread
     {
         // $thread = $this->thread_interacter->fetch($id);
         return $thread;
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Thread  $thread
-     * @return
+     * thread_detail
+     * @param int $thread_id
+     * @return array
      */
-    public function edit(Thread $thread)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateThreadRequest  $request
-     * @param  \App\Models\Thread  $thread
-     * @return
-     */
-    public function update(UpdateThreadRequest $request, Thread $thread)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Thread  $thread
-     * @return
-     */
-    public function destroy(Thread $thread)
-    {
-        //
-    }
-
-    public function thread_detail(int $thread_id)
+    public function thread_detail(int $thread_id): array
     {
         $res = $this->thread_interacter->thread_detail($thread_id);
         return $res;
     }
 
-    public function myThread(int $user_id)
+    /**
+     * myThread
+     * @param int $user_id
+     * @return array
+     */
+    public function myThread(int $user_id): array
     {
         $res = $this->thread_interacter->myThread($user_id);
         return $res;

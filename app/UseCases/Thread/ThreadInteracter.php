@@ -2,9 +2,11 @@
 
 namespace App\UseCases\Thread;
 
+use App\Http\Requests\StoreThreadRequest;
 use App\Services\Comment\CommentService;
 use App\Services\Thread\ThreadService;
 use App\Values\Comment\CommentOutput;
+use App\Values\Thread\StoreThreadInput;
 use App\Values\Thread\ThreadOutput;
 use App\Values\Thread\ThreadDetailOutput;
 
@@ -21,16 +23,38 @@ class ThreadInteracter
         $this->comment_service = $comment_service;
     }
 
-
-    public function index()
+    /**
+     * index
+     * @return array
+     */
+    public function index(): array
     {
         $res = $this->thread_service->index();
-        return $res;
+        $output = [];
+        foreach ($res as $thread) {
+            $entity = new ThreadOutput(
+                $thread->id,
+                $thread->user_id,
+                $thread->title,
+            );
+            $output[] = $entity->toArray();
+        }
+        return $output;
     }
 
-    public function store($request)
+    /**
+     * store
+     * @param StoreThreadRequest $request
+     * @return void
+     */
+    public function store(StoreThreadRequest $request): void
     {
-        $this->thread_service->store($request);
+        $input = new StoreThreadInput(
+        $request->user_id,
+        $request->title,
+        $request->content,
+        );
+        $this->thread_service->store($input);
     }
 
     public function thread_detail($thread_id)
