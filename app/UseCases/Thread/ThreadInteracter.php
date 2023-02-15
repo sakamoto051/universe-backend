@@ -12,8 +12,8 @@ use App\Values\Thread\ThreadDetailOutput;
 
 class ThreadInteracter
 {
-    private $thread_service;
-    private $comment_service;
+    private ThreadService $thread_service;
+    private CommentService $comment_service;
 
     public function __construct(
         ThreadService $thread_service,

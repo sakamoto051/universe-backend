@@ -12,7 +12,7 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 
 class ThreadController extends Controller
 {
-    private $thread_interacter;
+    private ThreadInteracter $thread_interacter;
 
     public function __construct(ThreadInteracter $thread_interacter)
     {
