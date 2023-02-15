@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\ThreadEntity;
 use App\Http\Requests\FetchIdRequest;
 use App\Http\Requests\StoreThreadRequest;
 use App\Models\Thread;
@@ -40,19 +41,6 @@ class ThreadController extends Controller
     {
         $this->thread_interacter->store($request);
         return response('Success to store thread.', 200)->header('Content-Type', 'text/plain');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param FetchIdRequest $id
-     * @return Thread $thread
-     */
-    // public function show(FetchIdRequest $id)
-    public function show(Thread $thread): Thread
-    {
-        // $thread = $this->thread_interacter->fetch($id);
-        return $thread;
     }
 
     /**
