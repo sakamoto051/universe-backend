@@ -7,7 +7,7 @@ use App\Values\Comment\StoreCommentInput;
 
 class CommentInteracter
 {
-    private $comment_service;
+    private CommentService $comment_service;
 
     public function __construct(
         CommentService $comment_service,
@@ -15,10 +15,14 @@ class CommentInteracter
         $this->comment_service = $comment_service;
     }
 
-    public function store(StoreCommentInput $input)
+    /**
+     * Summary of store
+     * @param StoreCommentInput $input
+     * @return array
+     */
+    public function store(StoreCommentInput $input): array
     {
         $comment = $this->comment_service->store($input);
-        return $comment;
+        return $comment->toArray();
     }
-
 }

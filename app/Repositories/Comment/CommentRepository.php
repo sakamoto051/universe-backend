@@ -10,13 +10,19 @@ use Throwable;
 
 class CommentRepository implements CommentRepositoryInterface
 {
-    public function findByThreadId($thread_id)
+    /**
+     * Summary of findByThreadId
+     * @param int $thread_id
+     * @throws Exception
+     * @return array
+     */
+    public function findByThreadId(int $thread_id): array
     {
         try {
             $comments = Comment::where('thread_id', $thread_id)->orderBy('comment_no')->get();
-            $comment_entities = [];
+            $res = [];
             foreach ($comments as $comment) {
-                $comment_entities[] = new CommentEntity(
+                $res[] = new CommentEntity(
                     $comment->id,
                     $comment->user_id,
                     $comment->thread_id,
@@ -25,13 +31,21 @@ class CommentRepository implements CommentRepositoryInterface
                     $comment->created_at,
                 );
             }
-            return $comment_entities;
+            return $res;
         } catch (Throwable $e) {
             throw new Exception($e);
         }
     }
 
-    public function storeComment($user_id, $thread_id, $content)
+    /**
+     * Summary of storeComment
+     * @param int $user_id
+     * @param int $thread_id
+     * @param string $content
+     * @throws Exception
+     * @return CommentEntity
+     */
+    public function storeComment(int $user_id, int $thread_id, string $content): CommentEntity
     {
         try {
             $last_comment_no = DB::table('comments')
@@ -45,7 +59,16 @@ class CommentRepository implements CommentRepositoryInterface
                 'comment_no' => $comment_no,
                 'content' => $content,
             ]);
-            return $comment;
+
+            $res = new CommentEntity(
+                $comment->id,
+                $comment->user_id,
+                $comment->thread_id,
+                $comment->comment_no,
+                $comment->content,
+                $comment->created_at
+            );
+            return $res;
         } catch (Throwable $e) {
             throw new Exception($e);
         }
