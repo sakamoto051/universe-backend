@@ -1,0 +1,12 @@
+version: 1
+task_definition:
+  task_execution_role: ecsTaskExecutionRole
+  ecs_network_mode: awsvpc
+  container_definitions:
+    - name: "universe-backend"
+      image: "227541536114.dkr.ecr.ap-northeast-1.amazonaws.com/universe-backend:latest"
+      essential: true
+      portMappings:
+        - containerPort: 80
+  requires_compatibilities:
+    - FARGATE
