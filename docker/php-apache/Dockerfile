@@ -31,7 +31,7 @@ COPY ./docker/php-apache/php.ini /usr/local/etc/php/php.ini
 
 RUN composer install \
   && chmod -R 777 storage bootstrap/cache public/
-RUN php artisan config:cache --env=example
+RUN php artisan config:cache --env=development
 RUN php artisan route:cache
 RUN php artisan view:cache
 RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash -
