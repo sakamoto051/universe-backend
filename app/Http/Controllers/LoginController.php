@@ -18,7 +18,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            $token = $user->createToken('token-name')->plainTextToken;
+            $token = $user->createToken('token-name');
 
             return response()->json(['token' => $token]);
         } else {
