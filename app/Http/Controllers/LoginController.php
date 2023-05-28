@@ -7,12 +7,15 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use Psy\Readline\Hoa\Exception;
 
 class LoginController extends Controller
 {
-    public function login(Request $request): JsonResponse
+    public function login(Request $request)
     {
+        return response()->json(Session::all());
+
         Log::debug($request->session()->all());
         Log::debug($request);
         $credentials = $request->validate([
