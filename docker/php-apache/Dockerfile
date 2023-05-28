@@ -29,6 +29,8 @@ COPY ./ /var/www/app
 COPY ./docker/php-apache/000-default.conf /etc/apache2/sites-available/000-default.conf
 COPY ./docker/php-apache/php.ini /usr/local/etc/php/php.ini
 
+RUN composer require predis/predis
+
 RUN composer install \
   && chmod -R 777 storage bootstrap/cache public/
 RUN php artisan config:cache --env=development
