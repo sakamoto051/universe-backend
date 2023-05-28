@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Session;
 use Psy\Readline\Hoa\Exception;
 
 class LoginController extends Controller
@@ -18,7 +17,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            $token = $user->createToken('token-name');
+            $token = $user->createToken('token-name')->plainTextToken;
 
             return response()->json(['token' => $token]);
         } else {
