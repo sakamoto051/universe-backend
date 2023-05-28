@@ -19,6 +19,9 @@ class LoginController extends Controller
             $user = Auth::user();
             $token = $user->createToken('token-name')->plainTextToken;
 
+            $token = csrf_token();
+
+
             return response()->json(['token' => $token]);
         } else {
             return response()->json(['error' => 'Invalid credentials'], 401);
