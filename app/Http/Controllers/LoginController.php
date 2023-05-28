@@ -13,6 +13,7 @@ class LoginController extends Controller
 {
     public function login(Request $request): JsonResponse
     {
+        Log::debug($request->session()->all());
         Log::debug($request);
         $credentials = $request->validate([
             'email' => ['required', 'email'],
