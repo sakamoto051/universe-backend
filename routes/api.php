@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\dummyAPI;
 use App\Http\Controllers\UserController;
 
-Route::middleware('auth:sanctum')->group(function () {
+// Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/thread_detail/{thread_id}', [ThreadController::class, 'thread_detail']);
     Route::get('/my_thread/{user_id}', [ThreadController::class, 'myThread']);
     Route::post('/chat', [ChatGPTController::class, 'chat']);
-});
+// });
 
 
 Route::get('/data', [dummyAPI::class, 'getData']);
