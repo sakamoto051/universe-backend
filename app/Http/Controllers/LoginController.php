@@ -14,22 +14,29 @@ class LoginController extends Controller
 {
     public function login(Request $request)
     {
-        return response()->json(Session::all());
+        $credentials = $request->only('email', 'password');
 
-        Log::debug($request->session()->all());
-        Log::debug($request);
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => 'required',
-        ]);
-
-        Log::debug(implode(',', $credentials));
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return response()->json(['name' => Auth::user()->email], 200);
+            $user = Auth::user();
+            $token = $user->createToken('token-name')->plainTextToken;
+
+            return response()->json(['token' => $token]);
+        } else {
+            return response()->json(['error' => 'Invalid credentials'], 401);
         }
 
-        throw new Exception('ログインに失敗しました。再度お試しください');
+        // $credentials = $request->validate([
+        //     'email' => ['required', 'email'],
+        //     'password' => 'required',
+        // ]);
+
+        // Log::debug(implode(',', $credentials));
+        // if (Auth::attempt($credentials)) {
+        //     $request->session()->regenerate();
+        //     return response()->json(['name' => Auth::user()->email], 200);
+        // }
+
+        // throw new Exception('ログインに失敗しました。再度お試しください');
     }
 
     public function logout(Request $request): JsonResponse
