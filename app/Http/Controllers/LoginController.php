@@ -23,12 +23,8 @@ class LoginController extends Controller
         }
     }
 
-    public function logout(Request $request): JsonResponse
+    public function logout()
     {
         Auth::guard('sanctum')->user()->tokens()->delete();
-        $request->session()->invalidate();
-        // $request->session()->regenerateToken();
-        $res = ['message' => 'logout!'];
-        return response()->json($res, Response::HTTP_OK);
     }
 }
