@@ -10,9 +10,7 @@ use App\Http\Controllers\dummyAPI;
 use App\Http\Controllers\UserController;
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
+    Route::get('/user', [UserController::class, 'index']);
     Route::get('/logout', [LoginController::class, 'logout']);
     Route::resource('thread', ThreadController::class);
     Route::resource('comment', CommentController::class);
@@ -26,4 +24,4 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::get('/data', [dummyAPI::class, 'getData']);
 
-Route::resource('user', UserController::class);
+Route::post('/user', [UserController::class, 'store']);
